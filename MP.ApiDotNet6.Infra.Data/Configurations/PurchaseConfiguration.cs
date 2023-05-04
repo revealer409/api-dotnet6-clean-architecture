@@ -1,8 +1,6 @@
 ﻿using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Metadata.Builders;
 using MP.ApiDotNet6.Domain.Entities;
-using System;
-
 
 namespace MP.ApiDotNet6.Infra.Data.Configurations {
     public class PurchaseConfiguration : IEntityTypeConfiguration<Purchase> {

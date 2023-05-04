@@ -25,6 +25,8 @@ namespace MP.Api.DotNet6.Application.Services {
                 return ResultService.RequestError<PersonDTO>("Problema de validade!", result);
 
             var person = _mapper.Map<Person>(personDTO);
+            var data = await _personRepository.CreateAsync(person);
+            return ResultService.Ok<PersonDTO>(_mapper.Map<PersonDTO>(data));
         }
     }
 }
