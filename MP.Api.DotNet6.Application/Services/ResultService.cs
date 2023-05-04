@@ -1,6 +1,11 @@
 ﻿using FluentValidation.Results;
 
 namespace MP.Api.DotNet6.Application.Services {
+
+    /*
+     Essa classe define um serviço genérico que representa o resultado de uma operação, 
+    indicando se a operação foi bem sucedida ou não, uma mensagem de retorno e uma lista de erros de validação.
+     */
     public class ResultService {
 
         public bool IsSuccess { get; set; }
