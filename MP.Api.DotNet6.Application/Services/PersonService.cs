@@ -28,5 +28,22 @@ namespace MP.Api.DotNet6.Application.Services {
             var data = await _personRepository.CreateAsync(person);
             return ResultService.Ok<PersonDTO>(_mapper.Map<PersonDTO>(data));
         }
+
+        public async Task<ResultService<PersonDTO>> GetByIdAsync(int id) {
+            var person = await _personRepository.GetByIdAsync(id);
+            
+            if(person == null) {
+                return ResultService.Fail<PersonDTO>("Pessoa não encontrada");
+            }
+
+            return ResultService.Ok(_mapper.Map<PersonDTO>(person));
+        }
+
+        public async Task<ResultService<ICollection<PersonDTO>>> GetAsync() {
+            var people = await _personRepository.GetPeopleAsync();
+            return ResultService.Ok<ICollection<PersonDTO>>(_mapper.Map<ICollection<PersonDTO>>(people));
+        }
+
+        
     }
 }
