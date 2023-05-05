@@ -6,5 +6,8 @@ namespace MP.Api.DotNet6.Application.Services.Interfaces {
         Task<ResultService<PersonDTO>> GetByIdAsync(int id);
         Task<ResultService<ICollection<PersonDTO>>> GetAsync();
 
+        Task<ResultService> UpdateAsync(PersonDTO personDTO);
+        
+        Task<ResultService> DeleteAsync(int id);
     }
 }
