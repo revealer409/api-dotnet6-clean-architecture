@@ -7,7 +7,7 @@ namespace MP.Api.DotNet6.Application.Mappings {
 
         public DomainToDTOMapping() {
             CreateMap<Person, PersonDTO>();
-
+            CreateMap<Product, ProductDTO>();
 
         }
     }
