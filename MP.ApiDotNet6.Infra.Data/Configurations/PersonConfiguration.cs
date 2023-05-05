@@ -25,7 +25,7 @@ namespace MP.ApiDotNet6.Infra.Data.Configurations {
 
             builder.HasMany(c => c.Purchases)
                 .WithOne(p => p.Person)
-                .HasForeignKey(p => p.Id);
+                .HasForeignKey(p => p.PersonId);
 
         }
 

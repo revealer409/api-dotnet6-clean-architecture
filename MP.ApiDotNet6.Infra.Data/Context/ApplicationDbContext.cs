@@ -12,7 +12,7 @@ namespace MP.ApiDotNet6.Infra.Data.Context {
 
         public DbSet<Product> Products { get; set; }
 
-        public DbSet<Purchase> Purchase { get; set; }
+        public DbSet<Purchase> Purchases { get; set; }
         public ApplicationDbContext(DbContextOptions<ApplicationDbContext> options) : base(options) {
         }
 
