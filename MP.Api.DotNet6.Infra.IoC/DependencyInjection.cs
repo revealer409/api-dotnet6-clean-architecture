@@ -19,13 +19,15 @@ namespace MP.ApiDotNet6.Infra.IoC {
                    b => b.MigrationsAssembly(typeof(ApplicationDbContext).Assembly.FullName)));
 
             services.AddScoped<IPersonRepository, PersonRepository>();
+            services.AddScoped<IProductRepository, ProductRepository>();
             return services;
         }
 
         public static IServiceCollection AddServices(this IServiceCollection services, IConfiguration config) {
             services.AddAutoMapper(typeof(DomainToDTOMapping));
             services.AddScoped<IPersonService, PersonService>();
-            
+            services.AddScoped<IProductService, ProductService>();
+
             return services;
         }
     }
