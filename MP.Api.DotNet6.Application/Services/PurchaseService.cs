@@ -1,4 +1,5 @@
-﻿using MP.Api.DotNet6.Application.DTOs;
+﻿using AutoMapper;
+using MP.Api.DotNet6.Application.DTOs;
 using MP.Api.DotNet6.Application.DTOs.Validations;
 using MP.Api.DotNet6.Application.Services.Interfaces;
 using MP.ApiDotNet6.Domain.Entities;
@@ -10,11 +11,13 @@ namespace MP.Api.DotNet6.Application.Services {
         private readonly IProductRepository _productRepository;
         private readonly IPersonRepository _personRepository;
         private readonly IPurchaseRepository _purchaseRepository;
+        private readonly IMapper _mapper;
 
-        public PurchaseService(IProductRepository productRepository, IPersonRepository personRepository, IPurchaseRepository purchaseRepository) {
+        public PurchaseService(IProductRepository productRepository, IPersonRepository personRepository, IPurchaseRepository purchaseRepository, IMapper mapper) {
             _productRepository = productRepository;
             _personRepository = personRepository;
             _purchaseRepository = purchaseRepository;
+            _mapper = mapper;
         }
 
         public async Task<ResultService<PurchaseDTO>> CreateAsync(PurchaseDTO purchaseDTO) {
@@ -35,5 +38,22 @@ namespace MP.Api.DotNet6.Application.Services {
 
             return ResultService.Ok<PurchaseDTO>(purchaseDTO);
         }
+
+        public async Task<ResultService<PurchaseDetailDTO>> GetByIdAsync(int id) {
+            var purchase = await _purchaseRepository.GetByIdAsync(id);
+
+            if (purchase == null)
+                return ResultService.Fail<PurchaseDetailDTO>("Compra não encontrada");
+
+            return ResultService.Ok(_mapper.Map<PurchaseDetailDTO>(purchase));
+        }
+
+        public async Task<ResultService<ICollection<PurchaseDetailDTO>>> GetAsync() {
+            var purchases = await _purchaseRepository.GetAllAsync();
+
+            return ResultService.Ok(_mapper.Map<ICollection<PurchaseDetailDTO>>(purchases));
+        }
+
+        
     }
 }

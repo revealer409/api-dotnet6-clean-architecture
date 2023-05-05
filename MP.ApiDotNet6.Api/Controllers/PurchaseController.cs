@@ -32,5 +32,30 @@ namespace MP.ApiDotNet6.Api.Controllers {
             }
 
         }
+
+        [HttpGet]
+        public async Task<ActionResult> GetAsync() {
+
+            var result = await _purchaseService.GetAsync();
+
+            if (result.IsSuccess)
+                return Ok(result);
+
+            return BadRequest(result);
+
+        }
+
+        [HttpGet]
+        [Route("{id}")]
+        public async Task<ActionResult> GetByIdAsync(int id) {
+
+            var result = await _purchaseService.GetByIdAsync(id);
+
+            if (result.IsSuccess)
+                return Ok(result);
+
+            return BadRequest(result);
+
+        }
     }
 }
