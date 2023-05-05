@@ -54,6 +54,37 @@ namespace MP.Api.DotNet6.Application.Services {
             return ResultService.Ok(_mapper.Map<ICollection<PurchaseDetailDTO>>(purchases));
         }
 
-        
+        public async Task<ResultService<PurchaseDTO>> UpdateAsync(PurchaseDTO purchaseDTO) {
+            if (purchaseDTO == null)
+                return ResultService.Fail<PurchaseDTO>("Objeto deve ser informado");
+
+            var result = new PurchaseDTOValidator().Validate(purchaseDTO);
+
+            if (!result.IsValid)
+                return ResultService.RequestError<PurchaseDTO>("Problemas de validação", result);
+
+            var purchase = await _purchaseRepository.GetByIdAsync(purchaseDTO.Id);
+
+            if (purchase == null)
+                return ResultService.Fail<PurchaseDTO>("Compra não encontrada");
+
+            var productId = await _productRepository.GetIdByCodErpAsync(purchaseDTO.CodErp);
+            var personId = await _personRepository.GetIdByDocumentAsync(purchaseDTO.Document);
+
+            purchase.Edit(purchase.Id, productId, personId);
+            await _purchaseRepository.EditAsync(purchase);
+
+            return ResultService.Ok(purchaseDTO);
+        }
+
+        public async Task<ResultService> RemoveAsync(int id) {
+            var purchase = await _purchaseRepository.GetByIdAsync(id);
+
+            if (purchase == null)
+                return ResultService.Fail("Compra não encontrada");
+
+            await _purchaseRepository.DeleteAsync(purchase);
+            return ResultService.Ok($"Compra: {id} deletada");
+        }
     }
 }
