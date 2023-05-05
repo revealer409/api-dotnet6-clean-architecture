@@ -8,5 +8,7 @@ namespace MP.ApiDotNet6.Domain.Repositories {
         Task<ICollection<Product>> GetProductAsync();
         Task EditAsync(Product product);
         Task DeleteAsync(Product product);
+
+        Task<int> GetIdByCodErpAsync(string codErp);
     }
 }

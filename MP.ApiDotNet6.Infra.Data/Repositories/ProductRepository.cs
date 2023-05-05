@@ -35,5 +35,10 @@ namespace MP.ApiDotNet6.Infra.Data.Repositories {
             await _db.SaveChangesAsync();
         }
 
+        public async Task<int> GetIdByCodErpAsync(string codErp) {
+            return (await _db.Products.FirstOrDefaultAsync(
+                 x => x.CodErp == codErp
+                ))?.Id ?? 0;
+        }
     }
 }
