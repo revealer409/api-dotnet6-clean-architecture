@@ -1,4 +1,6 @@
 ﻿using MP.Api.DotNet6.Application.DTOs;
+using MP.ApiDotNet6.Domain.FiltersDb;
+using MP.ApiDotNet6.Domain.Repositories;
 
 namespace MP.Api.DotNet6.Application.Services.Interfaces {
     public interface IPersonService {
@@ -9,5 +11,7 @@ namespace MP.Api.DotNet6.Application.Services.Interfaces {
         Task<ResultService> UpdateAsync(PersonDTO personDTO);
         
         Task<ResultService> DeleteAsync(int id);
+
+        Task<ResultService<PagedBaseResponseDTO<PersonDTO>>> GetPagedAsync(PersonFilterDb personFilterDb);
     }
 }

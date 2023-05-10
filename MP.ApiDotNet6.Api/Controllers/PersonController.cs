@@ -1,6 +1,7 @@
 ﻿using Microsoft.AspNetCore.Mvc;
 using MP.Api.DotNet6.Application.DTOs;
 using MP.Api.DotNet6.Application.Services.Interfaces;
+using MP.ApiDotNet6.Domain.FiltersDb;
 
 namespace MP.ApiDotNet6.Api.Controllers {
     [Route("api/[controller]")]
@@ -63,6 +64,18 @@ namespace MP.ApiDotNet6.Api.Controllers {
         [Route("{id}")]
         public async Task<ActionResult> DeleteAsync(int id) {
             var result = await _personService.DeleteAsync(id);
+
+            if (result.IsSuccess) {
+                return Ok(result);
+            }
+
+            return BadRequest(result);
+        }
+
+        [HttpGet]
+        [Route("paged")]
+        public async Task<ActionResult> GetPagedAsync([FromQuery] PersonFilterDb personFilterDb) {
+            var result = await _personService.GetPagedAsync(personFilterDb);
 
             if (result.IsSuccess) {
                 return Ok(result);

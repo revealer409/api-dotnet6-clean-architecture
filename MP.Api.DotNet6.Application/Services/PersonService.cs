@@ -4,6 +4,7 @@ using MP.ApiDotNet6.Domain.Repositories;
 using AutoMapper;
 using MP.Api.DotNet6.Application.DTOs.Validations;
 using MP.ApiDotNet6.Domain.Entities;
+using MP.ApiDotNet6.Domain.FiltersDb;
 
 namespace MP.Api.DotNet6.Application.Services {
     public class PersonService : IPersonService {
@@ -75,5 +76,14 @@ namespace MP.Api.DotNet6.Application.Services {
 
             return ResultService.Ok($"Pessoa do id:{id} foi deletada");
         }
+
+        public async Task<ResultService<PagedBaseResponseDTO<PersonDTO>>> GetPagedAsync(PersonFilterDb personFilterDb) {
+            var peoplePaged = await _personRepository.GetPagedAsync(personFilterDb);
+            var result = new PagedBaseResponseDTO<PersonDTO>(peoplePaged.TotalRegisters, 
+                _mapper.Map <List<PersonDTO>>(peoplePaged.Data));
+
+            return ResultService.Ok(result);
+        }
+
     }
 }
