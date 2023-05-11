@@ -14,7 +14,7 @@ namespace MP.ApiDotNet6.Infra.Data.Authentication {
             };
 
             var expires = DateTime.Now.AddDays(1);
-            var key = new SymmetricSecurityKey(Encoding.UTF8.GetBytes("projetoDotNetCore6"));
+            var key = new SymmetricSecurityKey(Encoding.UTF8.GetBytes("mTqE7fUg9W5nqA3YdpZM6k8H7jR4vT5L"));
             var tokenData = new JwtSecurityToken(
                 signingCredentials: new SigningCredentials(key, SecurityAlgorithms.HmacSha256Signature),
                 expires: expires,
