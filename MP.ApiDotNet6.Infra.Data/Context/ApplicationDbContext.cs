@@ -15,6 +15,8 @@ namespace MP.ApiDotNet6.Infra.Data.Context {
         public DbSet<Purchase> Purchases { get; set; }
 
         public DbSet<User> Users { get; set; }
+
+        public DbSet<PersonImage> PersonImages { get; set; }
         public ApplicationDbContext(DbContextOptions<ApplicationDbContext> options) : base(options) {
         }
 

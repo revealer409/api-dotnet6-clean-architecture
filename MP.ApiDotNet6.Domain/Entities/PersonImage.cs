@@ -11,12 +11,10 @@ namespace MP.ApiDotNet6.Domain.Entities {
         public int PersonId { get; set; }
         public Person Person { get; set; }
 
-        public PersonImage(string? imageUri, string? imageBase, int personId, Person person) {
+        public PersonImage(string? imageUri, string? imageBase, int personId) {
             Validation(personId);
             ImageUri = imageUri;
             ImageBase = imageBase;
-            PersonId = personId;
-            Person = person;
         }
 
         private void Validation(int personId) {
