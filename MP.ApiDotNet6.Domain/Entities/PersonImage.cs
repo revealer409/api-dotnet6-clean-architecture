@@ -11,7 +11,7 @@ namespace MP.ApiDotNet6.Domain.Entities {
         public int PersonId { get; set; }
         public Person Person { get; set; }
 
-        public PersonImage(string? imageUri, string? imageBase, int personId) {
+        public PersonImage(int personId, string? imageUri, string? imageBase) {
             Validation(personId);
             ImageUri = imageUri;
             ImageBase = imageBase;
