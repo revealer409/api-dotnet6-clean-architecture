@@ -10,8 +10,8 @@ namespace MP.ApiDotNet6.Infra.Data.Integrations {
         }
 
         public string Save(string imageBase64) {
-            var fileExt = imageBase64.Substring(imageBase64.IndexOf("/") + 1, imageBase64.IndexOf(":") - imageBase64.IndexOf("/") - 1); // png ou jpge
-
+            var fileExt = imageBase64.Substring(imageBase64.IndexOf("/") + 1, imageBase64.IndexOf(";") - imageBase64.IndexOf("/") - 1); // png ou jpge
+            
             var base64Code = imageBase64.Substring(imageBase64.IndexOf(",") + 1); // base64
 
             var imgBytes = Convert.FromBase64String(base64Code);

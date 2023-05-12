@@ -49,7 +49,7 @@ namespace MP.Api.DotNet6.Application.Services {
             if (!validations.IsValid)
                 return ResultService.RequestError("Problemas com a validação", validations);
 
-            var person = await _personImageRepository.GetByIdAsync(personImageDTO.PersonId);
+            var person = await _personRepository.GetByIdAsync(personImageDTO.PersonId);
 
             if (person == null)
                 return ResultService.Fail("Pessoa não encontrada");
