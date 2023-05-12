@@ -27,6 +27,10 @@ namespace MP.ApiDotNet6.Infra.Data.Configurations {
                 .WithOne(p => p.Person)
                 .HasForeignKey(p => p.PersonId);
 
+            builder.HasMany(c => c.PersonImages)
+                .WithOne(p => p.Person)
+                .HasForeignKey(x => x.PersonId);
+        
         }
 
     }
