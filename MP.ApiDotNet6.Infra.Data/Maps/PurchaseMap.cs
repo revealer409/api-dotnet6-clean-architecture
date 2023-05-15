@@ -2,8 +2,8 @@
 using Microsoft.EntityFrameworkCore.Metadata.Builders;
 using MP.ApiDotNet6.Domain.Entities;
 
-namespace MP.ApiDotNet6.Infra.Data.Configurations {
-    public class PurchaseConfiguration : IEntityTypeConfiguration<Purchase> {
+namespace MP.ApiDotNet6.Infra.Data.Maps {
+    public class PurchaseMap : IEntityTypeConfiguration<Purchase> {
         public void Configure(EntityTypeBuilder<Purchase> builder) {
             builder.ToTable("compra");
 

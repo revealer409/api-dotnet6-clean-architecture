@@ -2,8 +2,8 @@
 using Microsoft.EntityFrameworkCore.Metadata.Builders;
 using MP.ApiDotNet6.Domain.Entities;
 
-namespace MP.ApiDotNet6.Infra.Data.Configurations {
-    public class ProductConfiguration : IEntityTypeConfiguration<Product> {
+namespace MP.ApiDotNet6.Infra.Data.Maps {
+    public class ProductMap : IEntityTypeConfiguration<Product> {
         public void Configure(EntityTypeBuilder<Product> builder) {
             builder.ToTable("Produto");
 

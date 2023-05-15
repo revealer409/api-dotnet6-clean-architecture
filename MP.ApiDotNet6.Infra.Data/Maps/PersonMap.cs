@@ -2,8 +2,8 @@
 using Microsoft.EntityFrameworkCore;
 using MP.ApiDotNet6.Domain.Entities;
 
-namespace MP.ApiDotNet6.Infra.Data.Configurations {
-    public class PersonConfiguration : IEntityTypeConfiguration<Person> {
+namespace MP.ApiDotNet6.Infra.Data.Maps {
+    public class PersonMap : IEntityTypeConfiguration<Person> {
 
         public void Configure(EntityTypeBuilder<Person> builder) {
             builder.ToTable("Pessoa");

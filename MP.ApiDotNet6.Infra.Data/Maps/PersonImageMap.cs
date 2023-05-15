@@ -2,8 +2,8 @@
 using Microsoft.EntityFrameworkCore.Metadata.Builders;
 using MP.ApiDotNet6.Domain.Entities;
 
-namespace MP.ApiDotNet6.Infra.Data.Configurations {
-    public class PersonImageConfiguration : IEntityTypeConfiguration<PersonImage> {
+namespace MP.ApiDotNet6.Infra.Data.Maps {
+    public class PersonImageMap : IEntityTypeConfiguration<PersonImage> {
         public void Configure(EntityTypeBuilder<PersonImage> builder) {
             builder.ToTable("pessoaimagem");
             builder.HasKey(x => x.Id);

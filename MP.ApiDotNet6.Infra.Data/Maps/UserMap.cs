@@ -2,8 +2,8 @@
 using Microsoft.EntityFrameworkCore.Metadata.Builders;
 using MP.ApiDotNet6.Domain.Entities;
 
-namespace MP.ApiDotNet6.Infra.Data.Configurations {
-    public class UserConfiguration : IEntityTypeConfiguration<User> {
+namespace MP.ApiDotNet6.Infra.Data.Maps {
+    public class UserMap : IEntityTypeConfiguration<User> {
         public void Configure(EntityTypeBuilder<User> builder) {
             builder.ToTable("usuario");
 
@@ -17,6 +17,10 @@ namespace MP.ApiDotNet6.Infra.Data.Configurations {
 
             builder.Property(u => u.Password)
                 .HasColumnName("senha");
+
+            builder.HasMany(x => x.UserPermissions)
+                .WithOne(x => x.User)
+                .HasForeignKey(p => p.UserId);
         }
     }
 }
