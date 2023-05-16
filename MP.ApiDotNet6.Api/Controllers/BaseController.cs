@@ -12,7 +12,7 @@ namespace MP.ApiDotNet6.Api.Controllers {
         }
 
         [NonAction]
-        public IActionResult ForBidden() {
+        public IActionResult Forbidden() {
             var obj = new {
                 code = "permissão_negada",
                 message = "Usuário não tem permissão para acessar esse recurso"

@@ -2,6 +2,7 @@
 using Microsoft.AspNetCore.Mvc;
 using MP.Api.DotNet6.Application.DTOs;
 using MP.Api.DotNet6.Application.Services.Interfaces;
+using MP.ApiDotNet6.Domain.Authentication;
 using MP.ApiDotNet6.Domain.FiltersDb;
 
 namespace MP.ApiDotNet6.Api.Controllers {
@@ -9,28 +10,44 @@ namespace MP.ApiDotNet6.Api.Controllers {
     [Authorize]
     [Route("api/[controller]")]
     [ApiController]
-    public class PersonController : ControllerBase {
+    public class PersonController : BaseController {
 
         private readonly IPersonService _personService;
-
-        public PersonController(IPersonService personService) {
+        private readonly ICurrentUser _currentUser;
+        private List<string> _permissionNeeded = new List<string>() { "Admin" };
+        private readonly List<string> _permissionUser;
+        public PersonController(IPersonService personService, ICurrentUser currentUser) {
             _personService = personService;
+            _currentUser = currentUser;
+            _permissionUser = _currentUser.Permissions.Split(",").ToList() ?? new List<string>();
+
         }
 
         [HttpPost]
-        public async Task<ActionResult> PostAsync([FromBody] PersonDTO personDTO) {
-            var result = await _personService.CreateAsync(personDTO);
+        public async Task<IActionResult> PostAsync([FromBody] PersonDTO personDTO) {
+
+            _permissionNeeded.Add("CadastraPessoa");
+
+            if (!ValidPermission(_permissionUser, _permissionNeeded))
+            return Forbidden();
             
-            if(result.IsSuccess) {
+            var result = await _personService.CreateAsync(personDTO);
+
+            if (result.IsSuccess) {
                 return Ok(result);
             }
 
-            return BadRequest(result); 
+            return BadRequest(result);
         }
 
         [HttpGet]
         [Route("{id}")]
-        public async Task<ActionResult> GetByIdAsync(int id) {
+        public async Task<IActionResult> GetByIdAsync(int id) {
+            _permissionNeeded.Add("BuscaPessoa");
+
+            if (!ValidPermission(_permissionUser, _permissionNeeded))
+            return Forbidden();
+
             var result = await _personService.GetByIdAsync(id);
 
             if (result.IsSuccess) {
@@ -42,10 +59,15 @@ namespace MP.ApiDotNet6.Api.Controllers {
         }
 
         [HttpGet]
-        public async Task<ActionResult> GetAsync() {
+        public async Task<IActionResult> GetAsync() {
+            _permissionNeeded.Add("BuscaPessoa");
+
+            if (!ValidPermission(_permissionUser, _permissionNeeded))
+            return Forbidden();
+
             var result = await _personService.GetAsync();
 
-            if(result.IsSuccess) {
+            if (result.IsSuccess) {
                 return Ok(result);
             }
 
@@ -53,7 +75,12 @@ namespace MP.ApiDotNet6.Api.Controllers {
         }
 
         [HttpPut]
-        public async Task<ActionResult> UpdateAsync([FromBody] PersonDTO personDTO) {
+        public async Task<IActionResult> UpdateAsync([FromBody] PersonDTO personDTO) {
+            _permissionNeeded.Add("EditaPessoa");
+
+            if (!ValidPermission(_permissionUser, _permissionNeeded))
+            return Forbidden();
+
             var result = await _personService.UpdateAsync(personDTO);
 
             if (result.IsSuccess) {
@@ -65,7 +92,12 @@ namespace MP.ApiDotNet6.Api.Controllers {
 
         [HttpDelete]
         [Route("{id}")]
-        public async Task<ActionResult> DeleteAsync(int id) {
+        public async Task<IActionResult> DeleteAsync(int id) {
+            _permissionNeeded.Add("DeletaPessoa");
+
+            if (!ValidPermission(_permissionUser, _permissionNeeded))
+                return Forbidden();
+
             var result = await _personService.DeleteAsync(id);
 
             if (result.IsSuccess) {
